@@ -180,10 +180,19 @@ def rgb_ramp_example():
     led.write()
 
 
-# ---------------------------------------------------------------------------------
-# Run the example when this file is loaded
-print("-----------------------------------------------------------")
-print("Running the SparkFun RGB ramp example...")
-print("-----------------------------------------------------------")
-rgb_ramp_example()
-print("Done!")
+def run():
+    """
+       @brief Run the RGB ramp example.
+
+       @details
+       - Calls the rgb_ramp_example function to demonstrate LED color transitions.
+       """
+
+    print("-----------------------------------------------------------")
+    print("Running the SparkFun RGB ramp example...")
+    print("-----------------------------------------------------------")
+    rgb_ramp_example()
+    print("Done!")
+
+
+run()

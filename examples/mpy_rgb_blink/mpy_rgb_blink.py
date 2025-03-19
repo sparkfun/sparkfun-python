@@ -128,7 +128,7 @@ def rgb_blink_example(led, count=20):
 # Run the example when this file is loaded
 
 
-def run_example():
+def run():
 
     print("-----------------------------------------------------------")
     print("Running the SparkFun RGB blink example...")
@@ -149,4 +149,4 @@ def run_example():
     print("Done!")
 
 
-run_example()
+run()
