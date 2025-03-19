@@ -6,7 +6,7 @@
 #
 # @details
 # This module depends on the available `neopixel` library to control the RGB LED and the on-board
-# LED pin defined as "NEOPIXEL" and accessable via the machine module.
+# LED pin defined as "NEOPIXEL" and accessible via the machine module.
 #
 # @note This code is designed to work with the `neopixel` library and a compatible microcontroller, such as the
 # SparkFun IoT RedBoard - ESP32, or the SparkFun IoT RedBoard - RP2350
