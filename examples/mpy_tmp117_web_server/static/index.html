@@ -1,0 +1,130 @@
+<!doctype html>
+<html>
+  <head>
+    <link rel="stylesheet" href="static/index.css">
+    <title>SparkFun TMP117</title>
+    <meta charset="UTF-8">
+  </head>
+  <body>
+    <div class="header">
+      
+      <h1><img src = "static/logo.png" alt = "logo"/> SparkFun TMP117 Temperature Readings</h1>
+      
+     <!-- <div id="log">
+     </div> -->
+    <br>
+    <div id="wrapper">	
+      <div id="thermometer">
+        <div id="temperature" style="height:0" data-value="0°F"></div>
+        <div id="graduations"></div>
+      </div>
+
+      <div id="alerts">
+        <div id = "lowa">
+          <label for="low_alert">Low Alert</label>
+            <span class="indicator --success" id="low_alert"></span>
+            <form id="form_current_low">
+              <label for="low_input">Read Low Limit (°F): </label>
+              <input type="text" id="current_low" autofocus disabled="disabled">
+            </form>
+            <form id="form_low">
+              <label for="low_input">Set Low Limit (°F): </label>
+              <input type="text" id="low_input" autofocus>
+            </form>
+        </div>
+        <div id = "higha">
+          <label for="high_alert">High Alert</label>
+          <span class="indicator --success" id="high_alert"></span>
+          <form id="form_current_high">
+            <label for="high_input">Read High Limit (°F): </label>
+            <input type="text" id="current_high" autofocus disabled="disabled">
+          </form>
+          <form id="form_high">
+            <label for="high_input">Set High Limit (°F): </label>
+            <input type="text" id="high_input" autofocus>
+          </form>
+        </div>
+        <div id="log">
+        </div>
+      </div>  
+      <div class="info">
+        <button onclick="show_info()" class="info_button"><strong style="color: #2196F3" id = "info_button">&#x1F6C8 Info</strong><br></button>
+        <div id="long_info" class="hidden">
+          <p>Welcome to the SparkFun TMP117 Temperature Sensor App!<br><br>
+            Temperature will be displayed on the thermometer to the left, on a scale of 0°F to 100°F.<br><br>
+
+            To change one of the limit values, enter a number in the corresponding "Set Limit" box and press enter.<br>
+            After changing one of the values, give several seconds for the server to receive your request,<br>
+            set the limit on the device, and respond with the value read back from the device to update the "Read Limit" box.<br><br>
+            If the temperature drops below the low limit or above the high limit, triggering an alert on the device,<br>
+            the corresponding alert LED will turn red.
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+    <script>
+      const log = (text, color) => {
+        document.getElementById('log').innerHTML = `<span style="color: ${color}">${text}</span><br>`;
+      };
+      
+      function setTemperature(inTemp) {
+        inTemp = inTemp.toFixed(2);
+        temperature = document.getElementById("temperature");
+        temperature.style.height = inTemp + "%";
+        temperature.dataset.value = inTemp + "°F";
+        
+      }
+      
+      const socket = new WebSocket('ws://' + location.host + '/temperature');
+    
+      socket.addEventListener('message', ev => {
+        // ev.data will contain a json string containing our temperature and alert fields in the form:
+        // {"tempF": 7, "tempC": 19, "limitH": 75, "limitL": 65, "alertH": false, "alertL": true}
+        const tmpData = JSON.parse(ev.data)
+
+        // log('Temp (F): ' + String(tmpData.tempF) + ", Temp (C): " + String(tmpData.tempC), 'green');
+        
+        // document.getElementById('thermometer').value = tmpData.tempF
+        setTemperature(tmpData.tempF)
+        document.getElementById("current_low").value = tmpData.limitL;
+        document.getElementById("current_high").value = tmpData.limitH;
+        low_alert_class = tmpData.alertL ? "--error" : "--success";
+        high_alert_class = tmpData.alertH ? "--error" : "--success";
+        document.getElementById("low_alert").className = "indicator " + low_alert_class;
+        document.getElementById("high_alert").className = "indicator " + high_alert_class;
+      });
+      
+      socket.addEventListener('close', ev => {
+        log('Server has closed connection! Restart it and refresh page to again receive temp measurements.');
+      });
+      
+      function show_info() {
+        document.getElementById("long_info").classList.toggle('hidden');
+      };
+
+      function send_limit(box_name){
+        targetBox = document.getElementById(box_name);
+        newLimit = targetBox.value;
+        targetBox.value = "";
+        jsonVal = "{\"" + box_name + "\": " + newLimit + "}";
+        // log('Sending string: ' + json_val)
+        log("Sent new limit: " + newLimit + "°F. Give a few seconds for the read limit to set.")
+        socket.send(jsonVal);
+      }
+      
+      document.getElementById('form_low').onsubmit = ev => {
+        ev.preventDefault();
+        send_limit("low_input");
+      };
+      
+      document.getElementById('form_high').onsubmit = ev => {
+        ev.preventDefault();
+        send_limit("high_input");
+      };
+      
+    </script>
+  </body>
+</html>
+
