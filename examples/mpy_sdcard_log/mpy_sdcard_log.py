@@ -19,6 +19,11 @@
 # @license MIT
 #
 
+# NOTE: This example requires the use of the sd card module for micro python. If not installed, the
+# module is installed using the following mpremote command:
+#    mpremote mip install sdcard
+
+
 import machine
 from machine import Pin, SPI
 import sdcard
