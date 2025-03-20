@@ -37,3 +37,21 @@ The demo Python source code must be installed on the development board. This is 
 > ```mpremote mip install sdcard```
 
 ## Running the Demo
+
+Once the required demo files are loaded on the demo board, and a FAT formatted SDCard inserted, the demo is ready to run. To run the demo, connect to the development board and access the command line (often referred to as the [REPL](https://docs.micropython.org/en/latest/esp8266/tutorial/repl.html)). This is either done via an IDE interface, using the `mpremote` command or a Serial Terminal application.
+
+Once at the REPL command line, the demo runs when the demo python file is loaded.
+
+```python
+>>> import mpy_sdcard_log
+```
+
+When the demo starts, the SD Card is mounted and the output file created. After this is complete, data is logged to the output file and to the console. The following is an example of the output:
+
+![Demo Logging Output](../../docs/images/mpy_sdcard_log_output.png)
+
+Once the demo is complete, and while in the same MicroPython session, it is rerun using the following command:
+
+```python
+>>>> mpy_sdcard_log.run()
+```
