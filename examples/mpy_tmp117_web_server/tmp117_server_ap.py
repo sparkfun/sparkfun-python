@@ -58,8 +58,6 @@ def config_TMP117(tmp117Device, doAlerts):
     - If doAlerts is set to True, the TMP117 will be set to alert mode.
     """
     print("Setting up TMP117")
-    # Create instance of device
-    tmp117Device = qwiic_tmp117.QwiicTMP117()
 
     # Check if it's connected
     if tmp117Device.is_connected() == False:
