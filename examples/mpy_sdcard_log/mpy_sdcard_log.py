@@ -25,8 +25,6 @@
 
 
 import machine
-from machine import Pin, SPI
-import sdcard
 
 
 import os
@@ -35,17 +33,58 @@ import time
 import random
 import json
 
+SDCARD_MOUNT_POINT = "/sdcard"
+
+# global variable to track if the SD card is mounted
+_mounted_sd_card = False
+
 # Define the boards we support with this deme - This is a dictionary the key being
 # the board uname.machine value, and value a tuple that contains SPI bus number and CS ping number.
 SupportedBoards = {
     "SparkFun IoT RedBoard RP2350 with RP2350": (1, 9),
-    "SparkFun IoT RedBoard ESP32 with ESP32": (2, 5)
+    "SparkFun IoT RedBoard ESP32 with ESP32": (2, 5),
+    "Teensy 4.1 with MIMXRT1062DVJ6A": (-1, -1)
 }
 
 # ------------------------------------------------------------
 
 
-def mount_sd_card():
+def mount_sd_card(spi_bus, cs_pin):
+
+    global _mounted_sd_card
+    try:
+        import sdcard
+    except ImportError:
+        print("[Error] sdcard module not found. Please install it.")
+        return False
+
+    from machine import Pin, SPI
+
+    # Create the SPI object
+    spi = SPI(spi_bus, baudrate=1000000, polarity=0, phase=0)
+    # Create the CS pin object
+    cs = Pin(cs_pin, Pin.OUT)
+
+    # Create the SD card object
+    try:
+        sd = sdcard.SDCard(spi, cs)
+    except Exception as e:
+        print("[Error] ", e)
+        return False
+
+    # Mount the SD card
+    try:
+        vfs = uos.VfsFat(sd)
+        uos.mount(vfs, SDCARD_MOUNT_POINT)
+    except Exception as e:
+        print("[Error] Failed to mount the SD Card", e)
+        return False
+
+    _mounted_sd_card = True
+    return True
+
+
+def setup_sd_card():
     """
     Mounts an SD card to the filesystem.
 
@@ -66,29 +105,17 @@ def mount_sd_card():
     # Get the SPI bus and CS pin for this board
     spi_bus, cs_pin = SupportedBoards[board_name]
 
-    # Create the SPI object
-    spi = SPI(spi_bus, baudrate=1000000, polarity=0, phase=0)
-    # Create the CS pin object
-    cs = Pin(cs_pin, Pin.OUT)
+    # do we need to mount the sd card? (Teensy auto mounts)
+    status = False
+    if spi_bus != -1:
+        status = mount_sd_card(spi_bus, cs_pin)
+    else:
+        status = True
 
-    # Create the SD card object
-    try:
-        sd = sdcard.SDCard(spi, cs)
-    except Exception as e:
-        print("[Error] ", e)
-        return False
+    if status == True:
+        print("SD Card mounted successfully")
 
-    # Mount the SD card
-    try:
-        vfs = uos.VfsFat(sd)
-        uos.mount(vfs, "/sd")
-    except Exception as e:
-        print("[Error] Failed to mount the SD Card", e)
-        return False
-
-    print("SD Card mounted successfully")
-
-    return True
+    return status
 
 # ------------------------------------------------------------
 
@@ -149,7 +176,7 @@ def setup_log_file(filename):
     """
 
     try:
-        fs = open("/sd/" + filename, "w")
+        fs = open(SDCARD_MOUNT_POINT + os.sep + filename, "w")
     except Exception as e:
         print("[Error] Failed to open log file:", e)
         return None
@@ -219,10 +246,11 @@ def sdcard_log_example(filename="mpy_sdcard_log.txt", count=20, interval=2):
         None
     """
 
+    global _mounted_sd_card
     print("Logging to: {filename}, every {interval} seconds for {count} iterations.\n".format(
         filename=filename, interval=interval, count=count))
     # Mount the SD card
-    if not mount_sd_card():
+    if not setup_sd_card():
         print("Failed to mount SD card")
         return
 
@@ -231,10 +259,11 @@ def sdcard_log_example(filename="mpy_sdcard_log.txt", count=20, interval=2):
     # Log the data
     log_data(filename, count=count, interval=interval, to_console=True)
 
-    # Unmount the SD card
-    uos.umount("/sd")
-
-    print("\nSD Card unmounted successfully")
+    # Unmount the SD card if we need to
+    if _mounted_sd_card:
+        uos.umount(SDCARD_MOUNT_POINT)
+        _mounted_sd_card = False
+        print("\nSD Card unmounted successfully")
 
 # ------------------------------------------------------------
 # Run method for the example
