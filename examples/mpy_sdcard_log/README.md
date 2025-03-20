@@ -28,7 +28,7 @@ A great option for this is the [1GB SD Card](https://www.sparkfun.com/microsd-ca
 
 ## Install the Demo
 
-The demo Python source code must be installed on the development board. This is either peformed using a MicroPython enabled IDE (such as [Thonny](https://thonny.org) or [PyCharm](https://www.jetbrains.com/pycharm/download/?section=mac)).
+The demo Python source code [mpy_sdcard_log.py](mpy_sdcard_log.py) must be installed on the development board. This is either peformed using a MicroPython enabled IDE (such as [Thonny](https://thonny.org) or [PyCharm](https://www.jetbrains.com/pycharm/download/?section=mac)).
 
 > [!NOTE]
 > For development boards that access the SDCard via a SPI connection (such as the SparkFun Line of IoT RedBaords), the MicroPython `sdcard` library must be available. If not included in the MicroPython firmware, this library is easily installed using the MicroPython tool [mpremote](https://docs.micropython.org/en/latest/reference/mpremote.html).
