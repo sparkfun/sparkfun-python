@@ -34,7 +34,10 @@ The demo Python source code must be installed on the development board. This is 
 > For development boards that access the SDCard via a SPI connection (such as the SparkFun Line of IoT RedBaords), the MicroPython `sdcard` library must be available. If not included in the MicroPython firmware, this library is easily installed using the MicroPython tool [mpremote](https://docs.micropython.org/en/latest/reference/mpremote.html).
 >
 > To install the library, connect your MicroPython development board to your computer and issue the following command in a terminal window:
-> ```mpremote mip install sdcard```
+>
+> ```sh
+>  mpremote mip install sdcard
+> ```
 
 ## Running the Demo
 
