@@ -9,23 +9,14 @@
 
 ## SparkFun Qwiic
 
-> [!NOTE]
-> TODO: Overview and link to qwiic setup page
-
 [Using Qwiic in Python](docs/qwiic_setup.md)
 
 ## Setup SparkFun Boards and Devices
-
-> [!NOTE]
-> TODO: Overview and link to setup page
 
 [Using a Raspberry Pi or NVIDIA Orin](docs/linux_setup.md)
 
 [Setup and Using a Microcontroller Board](docs/mcu_setup.md)
 
 ## Examples
-
-> [!NOTE]
-> TODO: Overview and link to examples page
 
 [Available Python Examples](examples/README.md)
