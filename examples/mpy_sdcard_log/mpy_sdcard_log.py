@@ -23,10 +23,6 @@
 # module is installed using the following mpremote command:
 #    mpremote mip install sdcard
 
-
-import machine
-
-
 import os
 import uos
 import time
@@ -112,7 +108,7 @@ def setup_sd_card():
     else:
         status = True
 
-    if status == True:
+    if status is True:
         print("SD Card mounted successfully")
 
     return status
