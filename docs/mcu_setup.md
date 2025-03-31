@@ -6,10 +6,13 @@
     * [RP2 Boards](#rp2-boards)
     * [ESP32 Boards](#esp32-boards)
 * [Suggested Development Environments](#suggested-development-environments)
+    * [mpremote](#mpremote-micropython-remote-control)
+    * [Thonny](#thonny)
+    * [PyCharm](#pycharm)
 * [Drivers](#drivers)
 
 ## Supported Platforms
- [SparkFun Pro Micro RP2350](https://www.sparkfun.com/sparkfun-pro-micro-rp2350.html), [SparkFun IoT RedBoard ESP32](https://www.sparkfun.com/sparkfun-iot-redboard-esp32-development-board.html), [SparkFun IoT RedBoard RP2350](https://www.sparkfun.com/sparkfun-iot-redboard-rp2350.html)
+ [SparkFun Pro Micro RP2350](https://www.sparkfun.com/sparkfun-pro-micro-rp2350.html), [SparkFun IoT RedBoard ESP32](https://www.sparkfun.com/sparkfun-iot-redboard-esp32-micropython-development-board.html), [SparkFun IoT RedBoard RP2350](https://www.sparkfun.com/sparkfun-iot-redboard-rp2350.html)
 
  And more to come...
 
@@ -31,7 +34,7 @@ Connect to it with one of the [suggested development environments](#suggested-de
 
 ## Suggested Development Environments
 
-### MicroPython remote control: mpremote
+### mpremote: MicroPython remote control
 [mpremote](https://docs.micropython.org/en/latest/reference/mpremote.html) is a command line utility that provides tons of options for interfacing with a MicroPython board. A simple way to use it is to execute it standalone with no options. If you have installed mpremote you can simply execute ```mpremote``` in a command line to get direct access to the Python REPL on your board. A useful way to navigate the file system from this repl is to execute ```import os``` and then use the `os` methods. For example, ```os.listdir()``` will show everything in the current directory on your MicroPython board. ```os.getcwd()``` will print the name of the current directory and ```os.chdir('dir_name')``` will change the directory. An example of navigating around directories for a user who has installed the [mpy_tmp117_web_server](https://github.com/sparkfun/sparkfun-python/tree/main/examples/mpy_tmp117_web_server) demo from this repository can be seen below.
 
 ```
@@ -113,16 +116,38 @@ Hello from (Micro)Python! I am running on the following platform: rp2
 
 If all went well, we'll see our hello message and the name of an MCU platform (in this case RP2 for the RP2350).
 
-You can add any number of files in your local code-editor, and modify them as you wish and the changes will be reflected "on-the-fly" in your mpremote session. 
+You can add any number of files to the `hello_world` directory in a local code-editor, and modify them as you wish and the changes will be reflected "on-the-fly" in your mpremote session. 
 
 ### Thonny
-[Thonny](https://thonny.org/) is an IDE that provides a GUI environment for MicroPython development. Connect your board with MicroPython firmware to your computer and then configure your interpreter by clicking the bottom right-hand corner of Thonny.
+[Thonny](https://thonny.org/) is an IDE that provides a GUI environment with builtin support for MicroPython development. To get started, visit the [Thonny Downloads page](https://thonny.org/) and download the correct version for your operating system. Run the installation/setup program that you just downloaded for Thonny and click through each of the setup pages by accepting the default settings and pressing `Next`. 
 
-![thonny-boards](/docs/images/thonny-board.png "Thonny Boards")
+Connect your board that already has [MicroPython Firmware installed](#latest-micropython-firmware-downloads) to your computer and then configure your interpreter by clicking the bottom right-hand corner of Thonny. If your serial drivers are up to date and your board has proper MicroPython firmware installed,  clicking this interpreter box should show several MicroPython options:
+
+![thonny-board](/docs/images/thonny-board.png "Thonny Board")
 
 Select the version of MicroPython that makes the most sense for your board. Not sure? Select ```MicroPython (generic)```.
 
 This will connect to your board and show a Python REPL in the "shell" tab. To run a MicroPython program, open it from the ```MicroPython device``` tab. Then press the green arrow (Run Current Script). If you ever want to stop the running program, soft reset your board, or reconnect to your board, click the red stop sign (Stop/Restart backend).
+
+Let's run the same Python example in Thonny as we did for mpremote. Once connected to your board, via the instructions above, ensure that the `View > Files` option is selected from the Toolbar:
+
+![thonny-view](/docs/images/thonny-view.png "thonny-view")
+
+Now, in the `Files` tab, you should see two filel explorers, one called "This computer" for your local filesystem and one called "MicroPython device" representing the files on your board. Right click in the "MicroPython device" area and select `New file...`. 
+
+![thonny-new](/docs/images/thonny-new.png "thonny-new")
+
+Lets call our new file `print_platform.py`. Let's copy and paste the same python code from the `mpremote` section above into our new file and save it. Now it should appear in our `Files > MicroPython device` tab:
+
+![thonny-file](/docs/images/thonny-file.png "thonny-file")
+
+Finally, let's click on the green `Run current script` button and in the `Shell` tab we should see the expected print with a platform that matches the MCU of our MicroPython board:
+
+![thonny-run](/docs/images/thonny-run.png "thonny-run")
+
+![thonny-shell](/docs/images/thonny-shell.png "thonny-shell")
+
+Remember that you can also still use the REPL directly from the `Shell` tab and execute MicroPython commands on your board just as if you were using `mpremote`.
 
 ### PyCharm
 
@@ -184,7 +209,7 @@ While we're at it, lets create an execute command. Again, click the "+" sign and
 
 The upload command will take the directory that is configured as `MicroPython Sources Root` (in our case the hello_world directory) and load that onto the root directory of our MicroPython connected board. The execute command will run whatever file we have selected from the local computer's file system and run it on our board (without explicitly uploading it to the device).
 
-Now, let's connect to our device! Plug in your board that already has [MicroPython firmware installed](#latest-micropython-firmware-downloads) and then in the bottom-left of PyCharm, select the MicroPython Tools extension. Select the correct COM port for your board. And then click the plug symbol to connect. 
+Now, let's connect to our device! Plug in your board that already has [MicroPython Firmware installed](#latest-micropython-firmware-downloads) and then in the bottom-left of PyCharm, select the MicroPython Tools extension. Select the correct COM port for your board. And then click the plug symbol to connect. 
 
 ![pc-connect.png](/docs/images/pc-connect.png "pc-connect")
 
