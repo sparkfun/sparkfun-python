@@ -35,11 +35,9 @@ Connect the TMP117 to your board with your chosen qwiic method and you're ready 
 ### MicroPython
 If you are running the demo on a MicroPython board (and you did not purchase one of our boards with MicroPython pre-loaded on the board), first flash your board with MicroPython firmware. See the [most recent release of Sparkfun MicroPython](https://github.com/sparkfun/micropython/releases) and install the .uf2 (for RP2 boards) or .bin files (for ESP32 boards) corresponding to your board.
 
-Next, add the demo files to your board. You can do this manually, by copying the files from this directory (and from [qwiic_i2c_py](https://github.com/sparkfun/Qwiic_I2C_Py) and [qwiic_tmp117](https://github.com/sparkfun/Qwiic_TMP117_Py)) to your board with mpremote or with Thonny or another IDE. Alternatively, you can issue the below command to automatically install the files to the correct location on your board:
+Next, add the demo files to your board. You can do this manually, by copying the files from this directory (and from [qwiic_i2c_py](https://github.com/sparkfun/Qwiic_I2C_Py) and [qwiic_tmp117](https://github.com/sparkfun/Qwiic_TMP117_Py)) to your board with mpremote or with Thonny or another IDE. 
 
-```mpremote mip install github:sparkfun/sparkfun-python```
-
-In either case, after installing, the file structure on your board should look like this:
+In any case, after installing, the file structure on your board should look like this:
 ```
 /
    |
