@@ -12,9 +12,19 @@
 * [Drivers](#drivers)
 
 ## Supported Platforms
- [SparkFun Pro Micro RP2350](https://www.sparkfun.com/sparkfun-pro-micro-rp2350.html), [SparkFun IoT RedBoard ESP32](https://www.sparkfun.com/sparkfun-iot-redboard-esp32-micropython-development-board.html), [SparkFun IoT RedBoard RP2350](https://www.sparkfun.com/sparkfun-iot-redboard-rp2350.html)
+- [SparkFun IoT Node LoRaWAN](https://www.sparkfun.com/sparkfun-iot-node-lorawan.html)
+- [SparkFun Pro Micro RP2350](https://www.sparkfun.com/sparkfun-pro-micro-rp2350.html)
+- [SparkFun Pro Micro RP2040](https://www.sparkfun.com/sparkfun-pro-micro-rp2040.html)
+- [SparkFun IoT RedBoard ESP32](https://www.sparkfun.com/sparkfun-iot-redboard-esp32-micropython-development-board.html)
+- [SparkFun IoT RedBoard RP2350](https://www.sparkfun.com/sparkfun-iot-redboard-rp2350.html)
+- [Teensy 4.0](https://www.sparkfun.com/teensy-4-0.html)
+- [Teensy 4.1](https://www.sparkfun.com/teensy-4-1.html)
+- [SparkFun Thing Plus RP2040](https://www.sparkfun.com/sparkfun-thing-plus-rp2040.html)
+- [SparkFun Thing Plus RP2350](https://www.sparkfun.com/sparkfun-thing-plus-rp2350.html)
+- [SparkFun XRP Controller](https://www.sparkfun.com/sparkfun-experiential-robotics-platform-xrp-controller.html)
+- [SparkFun XRP Controller (Beta)](https://www.sparkfun.com/sparkfun-experiential-robotics-platform-xrp-controller-beta.html)
 
- And more to come...
+And more to come...
 
 ## Installing Firmware
 
