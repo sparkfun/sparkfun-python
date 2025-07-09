@@ -2,7 +2,7 @@
 
 ## Contents
 * [Supported Platforms](#hardware)
-* [Latest MicroPython Firmware Downloads](#latest-micropython-firmware-downloads)
+* [Installing Firmware](#installing-firmware)
     * [RP2 Boards](#rp2-boards)
     * [ESP32 Boards](#esp32-boards)
 * [Suggested Development Environments](#suggested-development-environments)
@@ -16,8 +16,12 @@
 
  And more to come...
 
-## Latest MicroPython Firmware Downloads 
-Get our latest MicroPython firmware for your board from our [MicroPython release page](https://github.com/sparkfun/micropython/releases). Different platforms have different methods of flashing:
+## Installing Firmware
+
+### SparkFun Firmware Updater
+The recommended way to install MicroPython firmware on a SparkFun board is with the [SparkFun MicroPython Firmware Updater](https://github.com/sparkfun/SparkFun_MicroPython_Firmware_Uploader). Follow [the instructions](https://github.com/sparkfun/SparkFun_MicroPython_Firmware_Uploader/blob/main/README.md) in that repository to download and install the correct firmware updater version for your computer. Then you can utilize the app to flash your board directly with the latest firmware from GitHub or a custom firmware file from another source. If you follow this route you can skip the platform-specific methods below.
+
+You can also get our latest MicroPython firmware for your board from our directly from [MicroPython release page](https://github.com/sparkfun/micropython/releases) and flash with the dedicated method for your platform. Different platforms have different methods of flashing:
 
 
 ### RP2 Boards
@@ -26,7 +30,7 @@ While connected to your computer, hold the "boot" button on the RP2 board while 
 Connect to it with one of the [suggested development environments](#suggested-development-environments) below.  
 
 ### ESP32 Boards
-Download the .zip archive for your board from the release link above and extract it. If you have not already, [download the esptool utility](https://docs.espressif.com/projects/esptool/en/latest/esp32/installation.html). Then, use ```esptool``` to flash your board using the command specified in the README.md contained in the .zip archive you downloaded for your board. Make sure you run the command from within that directory as well. For example, one ESP32 release contains a `bootloader.bin`, `partition-table.bin`, `micropython.bin`, and `README.md`. By reading the `README.md` I see that the command I must run FROM WITHIN THIS EXTRACTED DIRECTORY is:
+Download the .zip archive for your board from the release link above and extract it. If you have not already, [download the esptool utility](https://docs.espressif.com/projects/esptool/en/latest/esp32/installation.html). Then, use ```esptool``` to flash your board using the command specified below. Make sure you run the command from within that directory as well. For example, one ESP32 release contains a `bootloader.bin`, `partition-table.bin`, `micropython.bin`, and `README.md`. By reading the `README.md` I see that the command I must run FROM WITHIN THIS EXTRACTED DIRECTORY is:
 
 ```python -m esptool --chip esp32 -b 460800 --before default_reset --after hard_reset write_flash --flash_mode dio --flash_size 4MB --flash_freq 40m 0x1000 bootloader.bin 0x8000 partition-table.bin 0x10000 micropython.bin```
 
